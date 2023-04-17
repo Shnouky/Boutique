@@ -4,7 +4,7 @@ const controller = require('../controllers/sneaker');
 
 
 //Definit des routes
-router.get('./snerkers', controller.getSneakers)
+router.get('/sneakers', controller.getSneakers)
 
 router.get('/sneaker/:id', controller.getSneaker)
 
