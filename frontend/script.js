@@ -61,7 +61,29 @@ filterByColor(color);
 }
 
 function filterByColor (color) {
+    if (color === 'all') {
+        filteredSneakers = sneakers;
+        getSneakers();
+    } else {
     filteredSneakers = sneakers.filter(sneaker => sneaker.colors === color);
+    if(filteredSneakers.lenght <= 0){
+        container.innerHTML= "Aucune sneaker trouvée..."
+    }
+    getSneakers();
+    }
+}
+
+// tri par tri
+
+const  priceBtn = document.querySelector('.price-btn')
+priceBtn.addEventListener('click', sortByPrice())
+
+function compadeByPrice(a,b){
+    return a.price - b.price;
+}
+
+function sortByPrice(){
+    filteredSneakers.sort(compadeByPrice);
     getSneakers();
 }
 

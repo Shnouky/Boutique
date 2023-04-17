@@ -13,10 +13,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
-.color-picker-cnt {
+.sneaker.img {
+    width: 300px;
+}
+
+.color-picker-ctn {
     margin: 10px 0;
     display: flex;
     gap: 10px;
@@ -24,7 +28,7 @@
 
 .round {
     width: 40px;
-    height: 40p;
+    height: 40px;
     border-radius: 50%;
     border: 1px solid black;
     display: flex;
@@ -33,10 +37,10 @@
 }
 
 .blue {background-color: blue;}
-.blue {background-color: red;}
-.blue {background-color: black;}
-.blue {background-color: gray;}
-.blue {background-color: white;}
+.red {background-color: red;}
+.black {background-color: black;}
+.gray {background-color: gray;}
+.white {background-color: white;}
 
 .selected {
     border: 3px solid rgb(9, 255, 0);

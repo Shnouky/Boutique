@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "controllers/sneaker.js",
+  "main": "script.js",
   "scripts": {
     "start": "supervisor script.js"
   },
