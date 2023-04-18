@@ -57,7 +57,7 @@ function selectItem(e){
 //console.log("test")
 let picker = e.target;
 let color = e.target.classList[2]
-pickers.forEach((e) => {
+picker.forEach((e) => {
     e.classList.remove('selected');
 })
 picker.classList.add('selected');
@@ -72,7 +72,7 @@ function filterByColor (color) {
     } else {
     filteredSneakers = sneakers.filter(sneaker => sneaker.colors === color);
     if(filteredSneakers.length <= 0){
-        container.innerHTML = `<p>Aucune sneaker trouvée...</p>`
+        container.innerHTML= "Aucune sneaker trouvée..."
     }
     getSneakers();
     }
@@ -83,12 +83,13 @@ function filterByColor (color) {
 const  priceBtn = document.querySelector('.price-btn')
 priceBtn.addEventListener('click', sortByPrice)
 
-function comparedByPrice(a, b){
+function comparedByPrice(a,b){
     return a.price - b.price;
 }
 
 function sortByPrice(){
     filteredSneakers.sort(comparedByPrice);
+    return sortByPrice(),
     getSneakers();
 }
 
@@ -98,11 +99,10 @@ const cartCtn = document.querySelector('.cart-ctn');
 //Toggles cart
 function toggleCart(){
     cartCtn.classList.toggle('open-cart');
-    console.log(cartCtn.classList)
     if(cartCtn.classList.contains('open-cart')){
-        cartIcon.src = 'close.png';
+        cartCtn.src = 'close.png';
     } else {
-        cartIcon.src ='cart.png';
+        cartCtn.src ='cart.png';
     }
 }
 cartIcon.addEventListener('click', toggleCart);
