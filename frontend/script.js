@@ -26,7 +26,7 @@ function loadSneakers() {
         filteredSneakers = data.sneakers;
         getSneakers();
         console.log(sneakers, filteredSneakers);
-        loadCart();
+        loadCart(); //
     })
     .catch (error => {
         console.log('error : '+ error);
