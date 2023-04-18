@@ -6,24 +6,27 @@ const url = "http://localhost:8000";
 
 
 const container = document.querySelector('.ctn-sneakers');
-const pickers = document.querySelector('.picker');
+const pickers = document.querySelectorAll('.picker');
 
 let sneakers;
 let filteredSneakers;
-
-
+console.log(`${url}/sneakers`)
 
 
 function loadSneakers() {
-    fetch(`${url} /sneakers`)
+
+    fetch(`${url}/sneakers`)
+    
     .then(response => {
         return response.json()
+        
     })
     .then(data =>{
         sneakers =data.sneakers;
         filteredSneakers = data.sneakers;
         getSneakers();
         console.log(sneakers, filteredSneakers);
+        loadCart();
     })
     .catch (error => {
         console.log('error : '+ error);
@@ -37,16 +40,18 @@ function getSneakers(){
         let sneakerCtn = document.createElement("div");
         sneakerCtn.classList.add("sneaker-item");
         sneakerCtn.innerHTML= `
-        <img class="sneaker-img" src="${sneaker.img_1} alt="sneaker"/>
-        <div"class="sneaker-name">${sneaker.name}</div>
-        <div>${sneaker.price} $<div/>
-        `,
+        <img class="sneaker-img" src="${sneaker.img_1}" alt="sneaker"/>
+        <div class="sneaker-name">${sneaker.name}</div>
+        <div>${sneaker.price}$<div/>
+        <button onclick="addSneaker(${sneaker.id})">Ajouterau panier</button>
+        `;
         container.appendChild(sneakerCtn);
     })
+    pickers.forEach(picker => {
+        picker.addEventListener('click', selectItem)
+    })
 }
-pickers.forEach(picker => {
-    picker.addEventListner('click', selectItem)
-})
+
 
 function selectItem(e){
 //console.log("test")
@@ -66,7 +71,7 @@ function filterByColor (color) {
         getSneakers();
     } else {
     filteredSneakers = sneakers.filter(sneaker => sneaker.colors === color);
-    if(filteredSneakers.lenght <= 0){
+    if(filteredSneakers.length <= 0){
         container.innerHTML= "Aucune sneaker trouvée..."
     }
     getSneakers();
@@ -76,15 +81,63 @@ function filterByColor (color) {
 // tri par tri
 
 const  priceBtn = document.querySelector('.price-btn')
-priceBtn.addEventListener('click', sortByPrice())
+priceBtn.addEventListener('click', sortByPrice)
 
-function compadeByPrice(a,b){
+function comparedByPrice(a,b){
     return a.price - b.price;
 }
 
 function sortByPrice(){
-    filteredSneakers.sort(compadeByPrice);
+    filteredSneakers.sort(comparedByPrice);
+    return sortByPrice(),
     getSneakers();
+}
+
+
+const cartIcon = document.querySelector('.cart-icon');
+const cartCtn = document.querySelector('.cart-ctn');
+//Toggles cart
+function toggleCart(){
+    cartCtn.classList.toggle('open-cart');
+    if(cartCtn.classList.contains('open-cart')){
+        cartCtn.src = 'close.png';
+    } else {
+        cartCtn.src ='cart.png';
+    }
+}
+cartIcon.addEventListener('click', toggleCart);
+
+//Local storage
+
+let cartList = JSON.parse(localStorage.getItem('cart') || '[]');
+
+function addSneaker (id){
+    let sneaker = sneakers.find(sneaker => sneaker.id === id);
+    cartList.push(sneaker);
+    localStorage.setItem('cart', JSON.stringify(cartList));
+    loadCart();
+}
+
+function loadCart(){
+    cartCtn.innerHTML = "";
+    cartList.forEach(sneaker => {
+        let sneakerCart = document.createElement("div");
+        sneakerCart.classList.add("cart-item");
+        sneakerCart.innerHTML = `
+        <img src="${sneaker.img_1}" class="cart-sneaker-img" alt="sneaker"/>
+        <div>${sneaker.name}</div>
+        <div>${sneaker.price}$</div>
+        <button onclick="removeFromCart(${sneaker.id})">Remove</button>
+        `;
+        cartCtn.appendChild(sneakerCart);
+    })
+}
+
+function removeFromCart(id) {
+    let indexToRemove = cartList.findIndex(sneaker => sneaker.id === id);
+    cartList.splice(indexToRemove, 1);
+    localStorage.setItem('cart', JSON.stringify(cartList))
+    loadCart();
 }
 
 loadSneakers();

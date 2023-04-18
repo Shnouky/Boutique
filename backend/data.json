@@ -301,7 +301,7 @@
             "delivery_time": 5,
             "delivery_price": 6,
             "reduction": 0,
-            "img_1": "sneakers/sneaker1/img1.jpg",
+            "img_1": "../frontend/sneakers/sneaker1/img1.jpg",
             "img_2": "sneakers/sneaker1/img2.jpg",
             "img_3": "sneakers/sneaker1/img3.jpg",
             "available": true,
