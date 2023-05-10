@@ -1,15 +1,11 @@
 const url = "http://localhost:5000";
 
-//const btn = document.querySelector('.sneakers.btn')
-
-//btn.addEventListener('click', getSneakers);
-
-
 const container = document.querySelector('.ctn-sneakers');
 const pickers = document.querySelectorAll('.picker');
 
 let sneakers;
 let filteredSneakers;
+
 
 
 function loadSneakers() {
@@ -21,15 +17,17 @@ function loadSneakers() {
         
     })
     .then(data =>{
-        sneakers =data.sneakers;
+        sneakers = data.sneakers;
         filteredSneakers = data.sneakers;
         getSneakers();
         loadCart();
     })
     .catch (error => {
-        console.log('error : '+ error);
+        console.log(error);
     })
+    
 }
+
 
 //display sneakers
 function getSneakers(){
@@ -38,7 +36,10 @@ function getSneakers(){
         let sneakerCtn = document.createElement("div");
         sneakerCtn.classList.add("sneaker-item");
         sneakerCtn.innerHTML= `
+        <div class="encadrement">
+        <a href="./index.html?id=${sneaker.id}">
         <img class="sneaker-img" src="${sneaker.img_1_1}" alt="sneaker"/>
+        </a>
         <div class="sneaker-prix">
         <div class="sneaker-name">${sneaker.name}</div>
         <div>${sneaker.price}€</div>
@@ -56,6 +57,7 @@ function getSneakers(){
         <div class="sneakers-poid">${sneaker.Poids}</div>
         </div>
         <button onclick="addSneaker(${sneaker.id})" class="sneaker-btn">Ajouterau panier</button>
+        </div>
         <div class="barre"></div>
         `;
         container.appendChild(sneakerCtn);
@@ -73,8 +75,17 @@ togg1.addEventListener("click", () => {
     d1.style.display = "block";
   }
 })
-}
+//const data = require('../backend/data.json')
+//console.log(data)
 
+const queryString_url_id = window.location.search;
+const urlSearchParams = new URLSearchParams(queryString_url_id);
+const id = urlSearchParams.get('id');
+
+//const idProduitSelectionner = data.sneakers.find(element => element.id === id);
+//console.log(idProduitSelectionner)
+
+}
 
 function selectItem(e){
 //console.log("test")
@@ -123,6 +134,7 @@ function toggleCart(){
     cartCtn.classList.toggle('open-cart');
     if(cartCtn.classList.contains('open-cart')){
         cartIcon.src = 'close.png';
+
     } else {
         cartIcon.src ='cart.png';
     }
@@ -150,10 +162,35 @@ function loadCart(){
         <div>${sneaker.name}</div>
         <div>${sneaker.price}€</div>
         <button onclick="removeFromCart(${sneaker.id})"><img src="./poubelle.png" class="cart-sneaker-img" alt="sneaker"/></button>
+        <label for="quantity">Quantité</label>
+        <select name="quantity_produit" id="quantity_produit">
+        </select>
+
         `;
         cartCtn.appendChild(sneakerCart);
+        const StructureQuantity = `
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        `;
+
+        const positionQuantity = document.querySelector("#quantity_produit");
+        positionQuantity.innerHTML = StructureQuantity;
+        const choixQuantiter = positionQuantity.value;
+    
+    
     })
+    prixTotalCartList();
+   
 }
+
 
 function removeFromCart(id) {
     let indexToRemove = cartList.findIndex(sneaker => sneaker.id === id);
@@ -162,6 +199,32 @@ function removeFromCart(id) {
     loadCart();
 }
 
+function removeFromCartAll(id) {
+    let indexToRemove = cartList.findIndex(sneaker => sneaker.id === id);
+    cartList.splice(indexToRemove, 1000);
+    localStorage.setItem('cart', JSON.stringify(cartList))
+     const toutSupprimer = `
+     <button onclick="removeFromCart(${sneaker.id})"><img src="./poubelle.png" class="cart-sneaker-img" alt="sneaker"/></button>
+     `
+    cartCtn.insertAdjacentHTML("beforeend", toutSupprimer)
+}
+
+function prixTotalCartList(){
+let prixTotal = []; 
+
+for (let i = 0; i < cartList.length; i++){
+    let prixProduit = cartList[i].price;
+    prixTotal.push(prixProduit);
+    
+console.log(prixTotal);
+}
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const total = prixTotal.reduce(reducer);
+    const afficherTotal = `
+    <div class="afficher-total">Le total de votre panier est ${total} €</div>
+    `
+    cartCtn.insertAdjacentHTML("beforeend", afficherTotal)
+}
 
 loadSneakers();
 
