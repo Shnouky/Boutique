@@ -47,7 +47,7 @@ function getSneakers(){
             <ul class="featured-list">
               <li>
                 <figure>
-                <a href="./index.html?id=${sneaker.id}"><input type="radio" id="image1" name="image" checked>
+                  <a href="./index.html?id=${sneaker.id}"><input type="radio" id="image1" name="image" checked>
                   <img class="img-carousselle"   src="${sneaker.img_1_1}" alt="">
                   </a>
                 </figure>
@@ -116,20 +116,20 @@ function getSneakers(){
     </div>
     <div class="encadrement">
         <div class="sneaker-prix">
-        <div class="sneaker-name">${sneaker.name}</div>
-        <div>${sneaker.price}€</div>
+        <div class="sneaker-name">Model : ${sneaker.name}</div>
+        <div>Prix : ${sneaker.price}€</div>
         </div>
         <div class="sneakers-description-global">
-        <div class="sneakers-description">${sneaker.description}
+        <div class="sneakers-description">Description : <br> ${sneaker.description}
         <div id="texte-afficher">${sneaker.sous_description}</div>
         <button id="afficher-suite">Afficher la suite</button>
         </div>
         </div>
         <div class="sneakers-caracteristique">
-        <div><p class="div-caracteristique">Caracteristique</p></div>
-        <div class="sneakers-ecrans">${sneaker.Ecran}</div>
-        <div class="sneakers-stockage">${sneaker.stockage}</div>
-        <div class="sneakers-poid">${sneaker.Poids}</div>
+        <div class="div-caracteristique"><p >Caracteristique : </p></div>
+        <div class="sneakers-ecrans">Taille de l'écrans : ${sneaker.Ecran}</div>
+        <div class="sneakers-stockage">Capaciter de stockage : ${sneaker.stockage}</div>
+        <div class="sneakers-poid">Poids de l'appareil : ${sneaker.Poids}</div>
         </div>
         <button onclick="addSneaker(${sneaker.id})" class="sneaker-btn">Ajouterau panier</button>
         </div>
@@ -240,7 +240,7 @@ function loadCart(){
         <label for="quantity">Quantité</label>
         <select name="quantity_produit" id="quantity_produit">
         </select>
-
+      
         `;
         cartCtn.appendChild(sneakerCart);
         const StructureQuantity = `
@@ -279,7 +279,9 @@ function removeFromCartAll(id) {
     cartList.splice(indexToRemove, 1000);
     localStorage.setItem('cart', JSON.stringify(cartList))
      const toutSupprimer = `
+     
      <button onclick="removeFromCart(${sneaker.id})"><img src="./poubelle.png" class="cart-sneaker-img" alt="sneaker"/></button>
+     
      `
     cartCtn.insertAdjacentHTML("beforeend", toutSupprimer)
 }
@@ -297,6 +299,7 @@ console.log(prixTotal);
     const total = prixTotal.reduce(reducer);
     const afficherTotal = `
     <div class="afficher-total">Le total de votre panier est ${total} €</div>
+    <button class="sneaker-btn">Commander</button>
     `
     cartCtn.insertAdjacentHTML("beforeend", afficherTotal)
 }

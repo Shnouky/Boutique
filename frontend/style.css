@@ -140,7 +140,7 @@ body {
 
 .div-caracteristique {
     display: flex;
-    justify-content: end;
+    justify-content: start;
 }
 
 .sneaker-btn {
@@ -196,7 +196,6 @@ div#texte-afficher {
     --white: #fff;
     --red: #e74c3c;
     --black: #000;
-    --img-color: #ededed;
     --overlay: rgba(0, 0, 0, 0.75);
   }
   
