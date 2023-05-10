@@ -36,10 +36,85 @@ function getSneakers(){
         let sneakerCtn = document.createElement("div");
         sneakerCtn.classList.add("sneaker-item");
         sneakerCtn.innerHTML= `
-        <div class="encadrement">
-        <a href="./index.html?id=${sneaker.id}">
-        <img class="sneaker-img" src="${sneaker.img_1_1}" alt="sneaker"/>
-        </a>
+        
+        <div class="body-carouselle">
+        <input type="radio" id="image1" name="image" checked>
+        <input type="radio" id="image2" name="image">
+        <input type="radio" id="image3" name="image">
+        
+        <div class="container-carousselle">
+          <div class="featured-wrapper">
+            <ul class="featured-list">
+              <li>
+                <figure>
+                <a href="./index.html?id=${sneaker.id}"><input type="radio" id="image1" name="image" checked>
+                  <img class="img-carousselle"   src="${sneaker.img_1_1}" alt="">
+                  </a>
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <img class="img-carousselle"   src="${sneaker.img_1_2}" alt="">
+                </figure>
+              </li>
+              <li>
+                <figure>
+                  <img class="img-carousselle"   src="${sneaker.img_1_3}" alt="">
+                </figure>
+              </li>
+            </ul>
+            <ul class="arrows">
+              <li>
+                <label class="label-carousselle"   for="image1"></label class="label-carousselle"  >
+              </li>
+              <li>
+                <label class="label-carousselle"   for="image2"></label class="label-carousselle"  >
+              </li>
+              <li>
+                <label class="label-carousselle"   for="image3"></label class="label-carousselle"  >
+              </li>
+            </ul>
+            <ul class="dots">
+              <li>
+                <label class="label-carousselle"   for="image1"></label class="label-carousselle"  >
+              </li>
+              <li>
+                <label class="label-carousselle"   for="image2"></label class="label-carousselle"  >
+              </li>
+              <li>
+                <label class="label-carousselle"   for="image3"></label class="label-carousselle"  >
+              </li>
+            </ul>
+          </div>
+          <ul class="thumb-list">
+            <li>
+              <label class="label-carousselle"   for="image1">
+                <img class="img-carousselle"   src="${sneaker.img_1_1}" alt="">
+                <span class="outer">
+                  <span class="inner">Caption1</span>
+                </span>
+              </label class="label-carousselle"  >
+            </li>
+            <li>
+              <label class="label-carousselle"   for="image2">
+                <img class="img-carousselle"   src="${sneaker.img_1_2}" alt="">
+                <span class="outer">
+                  <span class="inner">Caption2</span>
+                </span>
+              </label class="label-carousselle"  >
+            </li>
+            <li>
+              <label class="label-carousselle"   for="image3">
+                <img class="img-carousselle"   src="${sneaker.img_1_3}" alt="">
+                <span class="outer">
+                  <span class="inner">Caption3</span>
+                </span>
+              </label class="label-carousselle"  >
+            </li>
+          </ul>
+        </div>
+    </div>
+    <div class="encadrement">
         <div class="sneaker-prix">
         <div class="sneaker-name">${sneaker.name}</div>
         <div>${sneaker.price}€</div>
