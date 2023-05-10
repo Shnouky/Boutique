@@ -1,4 +1,4 @@
-const url = "http://localhost:8000";
+const url = "http://localhost:5000";
 
 //const btn = document.querySelector('.sneakers.btn')
 
@@ -10,7 +10,6 @@ const pickers = document.querySelectorAll('.picker');
 
 let sneakers;
 let filteredSneakers;
-console.log(`${url}/sneakers`)
 
 
 function loadSneakers() {
@@ -25,7 +24,6 @@ function loadSneakers() {
         sneakers =data.sneakers;
         filteredSneakers = data.sneakers;
         getSneakers();
-        console.log(sneakers, filteredSneakers);
         loadCart();
     })
     .catch (error => {
@@ -40,16 +38,41 @@ function getSneakers(){
         let sneakerCtn = document.createElement("div");
         sneakerCtn.classList.add("sneaker-item");
         sneakerCtn.innerHTML= `
-        <img class="sneaker-img" src="${sneaker.img_1}" alt="sneaker"/>
+        <img class="sneaker-img" src="${sneaker.img_1_1}" alt="sneaker"/>
+        <div class="sneaker-prix">
         <div class="sneaker-name">${sneaker.name}</div>
-        <div>${sneaker.price}$<div/>
-        <button onclick="addSneaker(${sneaker.id})">Ajouterau panier</button>
+        <div>${sneaker.price}€</div>
+        </div>
+        <div class="sneakers-description-global">
+        <div class="sneakers-description">${sneaker.description}
+        <div id="texte-afficher">${sneaker.sous_description}</div>
+        <button id="afficher-suite">Afficher la suite</button>
+        </div>
+        </div>
+        <div class="sneakers-caracteristique">
+        <div><p class="div-caracteristique">Caracteristique</p></div>
+        <div class="sneakers-ecrans">${sneaker.Ecran}</div>
+        <div class="sneakers-stockage">${sneaker.stockage}</div>
+        <div class="sneakers-poid">${sneaker.Poids}</div>
+        </div>
+        <button onclick="addSneaker(${sneaker.id})" class="sneaker-btn">Ajouterau panier</button>
+        <div class="barre"></div>
         `;
         container.appendChild(sneakerCtn);
     })
     pickers.forEach(picker => {
         picker.addEventListener('click', selectItem)
     })
+
+let togg1 = document.getElementById("afficher-suite");
+let d1 = document.getElementById("texte-afficher");
+togg1.addEventListener("click", () => {
+  if(getComputedStyle(d1).display != "none"){
+    d1.style.display = "none";
+  } else {
+    d1.style.display = "block";
+  }
+})
 }
 
 
@@ -98,7 +121,6 @@ const cartCtn = document.querySelector('.cart-ctn');
 //Toggles cart
 function toggleCart(){
     cartCtn.classList.toggle('open-cart');
-    console.log(cartCtn.classList)
     if(cartCtn.classList.contains('open-cart')){
         cartIcon.src = 'close.png';
     } else {
@@ -124,10 +146,10 @@ function loadCart(){
         let sneakerCart = document.createElement("div");
         sneakerCart.classList.add("cart-item");
         sneakerCart.innerHTML = `
-        <img src="${sneaker.img_1}" class="cart-sneaker-img" alt="sneaker"/>
+        <img src="${sneaker.img_1_1}" class="cart-sneaker-img" alt="sneaker"/>
         <div>${sneaker.name}</div>
-        <div>${sneaker.price}$</div>
-        <button onclick="removeFromCart(${sneaker.id})">Remove</button>
+        <div>${sneaker.price}€</div>
+        <button onclick="removeFromCart(${sneaker.id})"><img src="./poubelle.png" class="cart-sneaker-img" alt="sneaker"/></button>
         `;
         cartCtn.appendChild(sneakerCart);
     })
@@ -140,4 +162,6 @@ function removeFromCart(id) {
     loadCart();
 }
 
+
 loadSneakers();
+
